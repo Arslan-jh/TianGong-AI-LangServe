@@ -13,9 +13,6 @@ from src.config.config import (
 from src.models.models import AgentInput, AgentOutput, GraphInput
 from src.routers import (
     search_academic_db_router,
-    search_academic_db_authors_router,
-    search_education_db_router,
-    search_esg_db_router,
     search_patent_db_router,
     search_standard_db_router,
     upload_file_router,
@@ -26,6 +23,7 @@ from src.services.lc.agents.zhipuai_agent import zhipuai_agent_runnable
 from src.services.lc.chains.openai_chain import openai_chain_runnable
 from src.services.lc.chains.zhipuai_chain import zhipuai_chain_runnable
 from src.services.lc.graphs.openai_gragh import openai_graph_runnable
+from src.services.lc.agents.openai_agent_without_tools import openai_agent_without_tools
 
 bearer_scheme = HTTPBearer()
 
@@ -58,9 +56,6 @@ app.add_middleware(
 app.mount("/.well-known", StaticFiles(directory="static"), name="static")
 
 app.include_router(search_academic_db_router.router)
-app.include_router(search_academic_db_authors_router.router)
-app.include_router(search_education_db_router.router)
-app.include_router(search_esg_db_router.router)
 app.include_router(search_patent_db_router.router)
 app.include_router(search_standard_db_router.router)
 app.include_router(upload_file_router.router)
@@ -103,6 +98,13 @@ add_routes(
     input_type=GraphInput,
 )
 
+add_routes(
+    app,
+    openai_agent_without_tools(),
+    path="/openai_agent_without_tools",
+    input_type=AgentInput,
+    output_type=AgentOutput,
+)
 
 add_routes
 
