@@ -23,7 +23,6 @@ from src.services.lc.tools.search_esg_tool import SearchESG
 from src.services.lc.tools.search_internet_tool import SearchInternet
 from src.services.lc.tools.search_local_db_tool import SearchLocalDb
 from src.services.lc.tools.search_patent_db_tool import SearchPatentDb
-from src.services.lc.tools.search_report_tool import SearchReport
 from src.services.lc.tools.search_standard_tool import SearchStandardDb
 
 
@@ -35,25 +34,24 @@ def init_chat_history(session_id: str) -> BaseChatMessageHistory:
         table_name=XATA_MEMORY_TABLE_NAME,
     )
 
-
 def openai_agent_runnable():
     lc_tools = [
-        PythonREPLTool(),
-        SearchAcademicDb(),
+        # PythonREPLTool(),
+        # SearchInternet(),
+        # SearchPatentDb(),
+        # SearchAcademicDb(),
         SearchESG(),
-        SearchInternet(),
-        SearchLocalDb(),
-        SearchPatentDb(),
-        SearchReport(),
-        SearchStandardDb(),
+        # SearchLocalDb(),
+        # SearchStandardDb(),
+        
     ]
     oai_tools = [convert_to_openai_function(tool) for tool in lc_tools]
 
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", "You are helpful AI assistant."),
+            ("system", "You are an AI assistant with expertise in ESG within automotive industry. Providing detailed descriptions where necessary and avoid including extraneous or unrelated content."),
             MessagesPlaceholder(variable_name="history"),
-            ("human", "{input}"),
+            ("human", "It is Volkswagan Sustainability Report 2023. The 'doc_ids' is 'rec_coh3s3g41648vkt35ltg'.{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
         ]
     )
