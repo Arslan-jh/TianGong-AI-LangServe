@@ -23,10 +23,10 @@ def init_chat_history(session_id: str) -> BaseChatMessageHistory:
         table_name=XATA_MEMORY_TABLE_NAME,
     )
 
-def openai_agent_without_tools():
+def automotive_tools():
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("system"),
+            ("system","As a Professional Automotive ESG Report Summary Expert, your objective is to organize text based on upstream information according to the following rules: Summarize upstream information, ensuring conciseness and a professional tone by avoiding extraneous details. The output must not contain symbols like '#', '-', or '*'. Both the title and the preceding serial number need to be retained, such as '1.1.1', '(1)', '(1.1)'."),
             MessagesPlaceholder(variable_name="history"),
             ("human", "{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
