@@ -39,7 +39,7 @@ def openai_agent_runnable():
         # PythonREPLTool(),
         # SearchInternet(),
         # SearchPatentDb(),
-        # SearchAcademicDb(),
+        # SearchAcademicDb(), 
         SearchESG(),
         # SearchLocalDb(),
         # SearchStandardDb(),
@@ -49,9 +49,9 @@ def openai_agent_runnable():
 
     prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", "You are an AI assistant with expertise in ESG within automotive industry. Providing detailed descriptions where necessary and avoid including extraneous or unrelated content."),
+            ("system", "You are an AI assistant with expertise in ESG within the automotive industry. Avoid extraneous or unrelated content, and ensure the response is well-structured, professional, and academic. Output the text as one paragraph, must not exceeding 500 tokens."),
             MessagesPlaceholder(variable_name="history"),
-            ("human", "It is Volkswagan Sustainability Report 2023. The 'doc_ids' is 'rec_coh3s3g41648vkt35ltg'.{input}"),
+            ("human", "It is 'Toyota Sustainability Data Book 2023'. The 'doc_ids' is 'rec_coh3s2041648vkt35lrg'.{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
         ]
     )
